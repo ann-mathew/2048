@@ -3,13 +3,13 @@ using namespace std;
 #define n 4
 int a[n][n]={0};
 
-int random_index(int x) 	//generates random index btw 0 and n-1
+int random_index(int x) 	//generates and returns random index btw 0 and n-1
 {
 	int index=rand()%x;
 	return index;
 }
 
-void generate_random()   //fills grid with a 2/4
+void random_value()   //fills grid with a 2/4
 {
 	while(true)
 	{
@@ -37,7 +37,7 @@ void initilaize()   //initializes grid
 	a[i][j]=2;              
 }
 
-bool is_8086()                  //checks if 8086 formed
+bool is_8086()                  //returns true if 8086 formed
 {
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
@@ -46,7 +46,7 @@ bool is_8086()                  //checks if 8086 formed
 	return false;
 }
 
-bool is_full()                  //checks if grid is full
+bool is_full()                  //returns true if grid is full
 {
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
@@ -55,7 +55,7 @@ bool is_full()                  //checks if grid is full
 	return true;
 }
 
-bool is_game_over()              //checks if any more moves possible
+bool is_game_over()              //returns true if no more moves possible
 {
 	for(int i=0;i<n;i++)         //merge_up possible
 		for(int j=0;j<n;j++)
@@ -82,58 +82,70 @@ bool is_game_over()              //checks if any more moves possible
 
 void move_up()                //moves numbers up
 {
+	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
 			if(!a[j][i])
 				for(int k=j+1;k<n;k++)
 					if(a[k][i])
 					{
+						//changed=true;
 						a[j][i]=a[k][i];
 						a[k][i]=0;
 						break;
 					}
+	//return changed;
 }
 
 void move_down()             //moves numbers down
 {
+	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=n-1;j>=0;j--)
 			if(!a[j][i])
 				for(int k=j-1;k>=0;k--)
 					if(a[k][i])
 					{
+						//changed=true;
 						a[j][i]=a[k][i];
 						a[k][i]=0;
 						break;
 					}
+	//return changed;
 }
 
 void move_left()            //moves numbers left
 {
+	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
 			if(!a[i][j])
 				for(int k=j+1;k<n;k++)
 					if(a[i][k])
 					{
+						//changed=true;
 						a[i][j]=a[i][k];
 						a[i][k]=0;
 						break;
 					}
+	//return changed;
 }
 
 void move_right()            //moves numbers right
 {
+	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=n-1;j>=0;j--)
 			if(!a[i][j])
 				for(int k=j-1;k>=0;k--)
 					if(a[i][k])
 					{
+						//changed=true;
 						a[i][j]=a[i][k];
 						a[i][k]=0;
 						break;
 					}
+	//return changed;
 }
 
 void merge_up()                //merges upward
@@ -188,6 +200,11 @@ void display()              //display
 		for(int j=0;j<n;j++)
 			cout<<a[i][j]<<"   ";
 	}
+}
+
+void menu()              //main menu
+{
+	display();
 
 	if(is_full())
 		if(is_game_over())
@@ -203,41 +220,38 @@ void display()              //display
 	}
 
 	char ch;
-	cout<<"\nEnter move\n";
+	cout<<"\nEnter move (w/a/s/d)\n";
 	cin>>ch;
 	switch(ch)
 	{
 	  case 'a': move_left();
 	  			merge_left();
 	  			move_left();
-	  			generate_random();
-	  			display();
+	  			random_value();
 				break;
 	  case 'w': move_up();
 	  			merge_up();
 	  			move_up();
-	  			generate_random();
-	  			display();
+	  			random_value();
 				break;
 	  case 'd': move_right();
 	  			merge_right();
 	  			move_right();
-	  			generate_random();
-	  			display();
+	  			random_value();
 				break;
 	  case 's': move_down();
 	  			merge_down();
 	  			move_down();
-	  			generate_random();
-	  			display();
+	  			random_value();
 				break;                  
-
+	  default : cout<<"\nInvalid entry, enter valid move\n";
 	}
 }
 
 int main()
 {
 	initilaize();
-	display();
+	while(true)
+		menu();
 	return 0;
 }
