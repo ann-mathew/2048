@@ -55,6 +55,30 @@ bool is_full()                  //checks if grid is full
 	return true;
 }
 
+bool is_game_over()              //checks if any more moves possible
+{
+	for(int i=0;i<n;i++)         //merge_up possible
+		for(int j=0;j<n;j++)
+            if(a[j][i]==a[j+1][i])
+                return false;
+
+	for(int i=0;i<n;i++)         //merge_right possible
+		for(int j=n-1;j>0;j--)
+			if(a[i][j]==a[i][j-1])
+                return false;
+ 
+	for(int i=0;i<n;i++)         //merge_left possible
+		for(int j=0;j<n-1;j++)
+			if(a[i][j]==a[i][j+1])
+            	return false;
+
+	for(int i=0;i<n;i++)        //merge_down possible
+		for(int j=n-1;j>0;j--)
+			if(a[j][i]==a[j-1][i])
+            	return false;
+
+    return true;
+}
 
 void move_up()                //moves numbers up
 {
@@ -163,6 +187,19 @@ void display()              //display
 		cout<<"\n";
 		for(int j=0;j<n;j++)
 			cout<<a[i][j]<<"   ";
+	}
+
+	if(is_full())
+		if(is_game_over())
+		{
+			cout<<"\nGame Lost";
+			exit (0);
+		}
+
+	if(is_8086())
+	{
+		cout<<"\nGame Won";
+		exit (0);
 	}
 
 	char ch;
