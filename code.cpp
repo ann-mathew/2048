@@ -1,9 +1,12 @@
+/*Program to implement 2048 game
+Link to github repository: https://github.com/ann-mathew/2048*/
+
 #include <iostream>
 using namespace std;
 #define n 4
 int a[n][n]={0};
 
-int random_index(int x) 	//generates and returns random index btw 0 and n-1
+int random_index(int x) 	                           	//generates and returns random index btw 0 and n-1
 {
 	int index=rand()%x;
 	return index;
@@ -27,7 +30,7 @@ void random_value()   //fills grid with a 2/4
 	}
 }
 
-void initilaize()   //initializes grid
+void initilaize()                                          	//initializes grid
 {
 	int i=random_index(n);
 	int j=random_index(n);
@@ -37,7 +40,7 @@ void initilaize()   //initializes grid
 	a[i][j]=2;              
 }
 
-bool is_8086()                  //returns true if 8086 formed
+bool is_8086()                                             	//returns true if 8086 formed
 {
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
@@ -46,7 +49,7 @@ bool is_8086()                  //returns true if 8086 formed
 	return false;
 }
 
-bool is_full()                  //returns true if grid is full
+bool is_full()                  				//returns true if grid is full
 {
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
@@ -55,24 +58,24 @@ bool is_full()                  //returns true if grid is full
 	return true;
 }
 
-bool is_game_over()              //returns true if no more moves possible
+bool is_game_over()              				//returns true if no more moves possible
 {
-	for(int i=0;i<n;i++)         //merge_up possible
+	for(int i=0;i<n;i++)         				//merge_up possible
 		for(int j=0;j<n;j++)
             if(a[j][i]==a[j+1][i])
                 return false;
 
-	for(int i=0;i<n;i++)         //merge_right possible
+	for(int i=0;i<n;i++)         				//merge_right possible
 		for(int j=n-1;j>0;j--)
 			if(a[i][j]==a[i][j-1])
                 return false;
  
-	for(int i=0;i<n;i++)         //merge_left possible
+	for(int i=0;i<n;i++)         				//merge_left possible
 		for(int j=0;j<n-1;j++)
 			if(a[i][j]==a[i][j+1])
             	return false;
 
-	for(int i=0;i<n;i++)        //merge_down possible
+	for(int i=0;i<n;i++)        				//merge_down possible
 		for(int j=n-1;j>0;j--)
 			if(a[j][i]==a[j-1][i])
             	return false;
@@ -80,129 +83,117 @@ bool is_game_over()              //returns true if no more moves possible
     return true;
 }
 
-void move_up()                //moves numbers up
+void move_up()                					//moves numbers up
 {
-	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
 			if(!a[j][i])
 				for(int k=j+1;k<n;k++)
 					if(a[k][i])
 					{
-						//changed=true;
 						a[j][i]=a[k][i];
 						a[k][i]=0;
 						break;
 					}
-	//return changed;
 }
 
-void move_down()             //moves numbers down
+void move_down()             					//moves numbers down
 {
-	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=n-1;j>=0;j--)
 			if(!a[j][i])
 				for(int k=j-1;k>=0;k--)
 					if(a[k][i])
 					{
-						//changed=true;
 						a[j][i]=a[k][i];
 						a[k][i]=0;
 						break;
 					}
-	//return changed;
 }
 
-void move_left()            //moves numbers left
+void move_left()            					//moves numbers left
 {
-	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n;j++)
 			if(!a[i][j])
 				for(int k=j+1;k<n;k++)
 					if(a[i][k])
 					{
-						//changed=true;
 						a[i][j]=a[i][k];
 						a[i][k]=0;
 						break;
 					}
-	//return changed;
 }
 
-void move_right()            //moves numbers right
+void move_right()            						//moves numbers right
 {
-	//bool changed=false;
 	for(int i=0;i<n;i++)
 		for(int j=n-1;j>=0;j--)
 			if(!a[i][j])
 				for(int k=j-1;k>=0;k--)
 					if(a[i][k])
 					{
-						//changed=true;
 						a[i][j]=a[i][k];
 						a[i][k]=0;
 						break;
 					}
-	//return changed;
 }
 
-void merge_up()                //merges upward
+void merge_up()                						//merges upward
 {
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n-1;j++)
 			if(a[j][i]==a[j+1][i] && a[j][i]!=0)
 			{
 				a[j][i]=a[j][i]*2;
-                a[j+1][i]=0;
+                		a[j+1][i]=0;
 			}
 }
 
-void merge_down()              //merges downward
+void merge_down()              						//merges downward
 {
 	for(int i=0;i<n;i++)
 		for(int j=n-1;j>0;j--)
 			if(a[j][i]==a[j-1][i] && a[j][i]!=0)
 			{
 				a[j][i]=a[j][i]*2;
-                a[j-1][i]=0;
+                		a[j-1][i]=0;
 			}
 }
 
-void merge_left()            //merges left
+void merge_left()            						//merges left
 {
 	for(int i=0;i<n;i++)
 		for(int j=0;j<n-1;j++)
 			if(a[i][j]==a[i][j+1] && a[i][j]!=0)
 			{
 				a[i][j]=a[i][j]*2;
-                a[i][j+1]=0;
+                		a[i][j+1]=0;
 			}
 }
 
-void merge_right()            //merges right
+void merge_right()            						//merges right
 {
 	for(int i=0;i<n;i++)
 		for(int j=n-1;j>0;j--)
 			if(a[i][j]==a[i][j-1] && a[i][j]!=0)
 			{
 				a[i][j]=a[i][j]*2;
-                a[i][j-1]=0;
+                		a[i][j-1]=0;
 			}
 }
 
-void display()              //display
+void display()              						//prints grid
 {
 	for(int i=0;i<n;i++)
 	{
 		cout<<"\n";
 		for(int j=0;j<n;j++)
-			cout<<a[i][j]<<"   ";
+			cout<<a[i][j]<<"     ";
 	}
 }
 
-void menu()              //main menu
+void menu()              						//main menu
 {
 	display();
 
