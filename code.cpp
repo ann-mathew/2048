@@ -37,36 +37,6 @@ void initilaize()   //initializes grid
 	a[i][j]=2;              
 }
 
-void display()              //display
-{
-	for(int i=0;i<n;i++)
-	{
-		cout<<"\n";
-		for(int j=0;j<n;j++)
-			cout<<a[i][j]<<"   ";
-	}
-
-	char ch;
-	cout<<"\nEnter move\n";
-	cin>>ch;
-	switch(ch)
-	{
-	  case 'a': move_left();
-	  			display();
-				break;
-	  case 'w': move_up();
-	  			display();
-				break;
-	  case 'd': move_right();
-	  			display();
-				break;
-	  case 's': move_down();
-	  			display();
-				break;                  
-
-	}
-}
-
 bool is_8086()                  //checks if 8086 formed
 {
 	for(int i=0;i<n;i++)
@@ -184,6 +154,48 @@ void merge_right()            //merges right
 				a[i][j]=a[i][j]*2;
                 a[i][j-1]=0;
 			}
+}
+
+void display()              //display
+{
+	for(int i=0;i<n;i++)
+	{
+		cout<<"\n";
+		for(int j=0;j<n;j++)
+			cout<<a[i][j]<<"   ";
+	}
+
+	char ch;
+	cout<<"\nEnter move\n";
+	cin>>ch;
+	switch(ch)
+	{
+	  case 'a': move_left();
+	  			merge_left();
+	  			move_left();
+	  			generate_random();
+	  			display();
+				break;
+	  case 'w': move_up();
+	  			merge_up();
+	  			move_up();
+	  			generate_random();
+	  			display();
+				break;
+	  case 'd': move_right();
+	  			merge_right();
+	  			move_right();
+	  			generate_random();
+	  			display();
+				break;
+	  case 's': move_down();
+	  			merge_down();
+	  			move_down();
+	  			generate_random();
+	  			display();
+				break;                  
+
+	}
 }
 
 int main()
