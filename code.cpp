@@ -142,10 +142,49 @@ void move_right()            //moves numbers right
 					}
 }
 
-void merge_up();
-void merge_down();
-void merge_left();
-void merge_right();
+void merge_up()                //merges upward
+{
+	for(int i=0;i<n;i++)
+		for(int j=0;j<n-1;j++)
+			if(a[j][i]==a[j+1][i] && a[j][i]!=0)
+			{
+				a[j][i]=a[j][i]*2;
+                a[j+1][i]=0;
+			}
+}
+
+void merge_down()              //merges downward
+{
+	for(int i=0;i<n;i++)
+		for(int j=n-1;j>0;j--)
+			if(a[j][i]==a[j-1][i] && a[j][i]!=0)
+			{
+				a[j][i]=a[j][i]*2;
+                a[j-1][i]=0;
+			}
+}
+
+void merge_left()            //merges left
+{
+	for(int i=0;i<n;i++)
+		for(int j=0;j<n-1;j++)
+			if(a[i][j]==a[i][j+1] && a[i][j]!=0)
+			{
+				a[i][j]=a[i][j]*2;
+                a[i][j+1]=0;
+			}
+}
+
+void merge_right()            //merges right
+{
+	for(int i=0;i<n;i++)
+		for(int j=n-1;j>0;j--)
+			if(a[i][j]==a[i][j-1] && a[i][j]!=0)
+			{
+				a[i][j]=a[i][j]*2;
+                a[i][j-1]=0;
+			}
+}
 
 int main()
 {
